@@ -1,5 +1,11 @@
 package array
 
+import (
+	"errors"
+	"reflect"
+	"strconv"
+)
+
 // ---------------------------------------------------------------------------------------------------------------------
 // int8 / int16 / int32 / int64 / int
 // ---------------------------------------------------------------------------------------------------------------------
@@ -115,19 +121,106 @@ func InArrayString(a string, array []string) bool {
 // interface{}
 // ---------------------------------------------------------------------------------------------------------------------
 
-func InArray(a interface{}, array ...interface{}) bool {
-	for _, e := range array {
-		if a == e {
-			return true
+func InArray(needle interface{}, haystack interface{}) bool {
+	v := reflect.ValueOf(haystack)
+	if (v.Kind() != reflect.Array) && (v.Kind() != reflect.Slice) && (v.Kind() != reflect.Map) {
+		return false
+	}
+	var (
+		errToString = errors.New("toString fail")
+		toString func(i interface{}) (str string, err error)
+	)
+	toString = func(i interface{}) (str string, err error) {
+		n := reflect.ValueOf(i)
+		switch n.Kind() {
+		case reflect.String:
+			str = n.String()
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			str = strconv.FormatInt(n.Int(), 10)
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+			str = strconv.FormatUint(n.Uint(), 10)
+		default:
+			err = errToString
+			return
+		}
+		return
+	}
+
+	s, err := toString(needle)
+	if err == errToString {
+		return false
+	}
+
+	switch v.Kind() {
+	case reflect.Array, reflect.Slice:
+		if v.Len() <= 0 {
+			return false
+		}
+		for i := 0; i < v.Len(); i++ {
+			switch v.Index(i).Kind() {
+			case reflect.Interface:
+				s2, _ := toString(v.Index(i).Interface())
+				if s == s2 {
+					return true
+				}
+			case reflect.String:
+				if s == v.Index(i).String() {
+					return true
+				}
+			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+				if s == strconv.FormatInt(v.Index(i).Int(), 10) {
+					return true
+				}
+			case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+				if s == strconv.FormatUint(v.Index(i).Uint(), 10) {
+					return true
+				}
+			}
+		}
+	case reflect.Map:
+		if v.Len() <= 0 {
+			return false
+		}
+		for _, key := range v.MapKeys() {
+			switch v.MapIndex(key).Kind() {
+			case reflect.String:
+				if s == v.MapIndex(key).String() {
+					return true
+				}
+			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+				if s == strconv.FormatInt(v.MapIndex(key).Int(), 10) {
+					return true
+				}
+			case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+				if s == strconv.FormatUint(v.MapIndex(key).Uint(), 10) {
+					return true
+				}
+			}
 		}
 	}
 	return false
 }
 
-func InArrayStrict(a interface{}, array ...interface{}) bool {
-	for _, e := range array {
-		if a == e {
-			return true
+func InArrayStrict(needle interface{}, haystack interface{}) bool {
+	v := reflect.ValueOf(haystack)
+	switch v.Kind() {
+	case reflect.Array, reflect.Slice:
+		if v.Len() <= 0 {
+			return false
+		}
+		for i := 0; i < v.Len(); i++ {
+			if reflect.DeepEqual(needle, v.Index(i).Interface()) {
+				return true
+			}
+		}
+	case reflect.Map:
+		if v.Len() <= 0 {
+			return false
+		}
+		for _, key := range v.MapKeys() {
+			if reflect.DeepEqual(needle, v.MapIndex(key).Interface()) {
+				return true
+			}
 		}
 	}
 	return false
