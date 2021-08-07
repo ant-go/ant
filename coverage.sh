@@ -2,12 +2,12 @@
 
 set -e
 
-echo "mode: count" > coverage.out
+echo "" > coverage.out
 
 for d in $(go list ./...); do
-	go test -v -covermode=count -coverprofile=profile.out $d
-	if [ -f profile.out ]; then
-		cat profile.out | grep -v "mode:" >> coverage.out
-		rm profile.out
-	fi
+    go test -v -race -coverprofile=profile.out -covermode=atomic $d
+    if [ -f profile.out ]; then
+        cat profile.out >> coverage.txt
+        rm profile.out
+    fi
 done
