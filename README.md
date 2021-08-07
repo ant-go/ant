@@ -1,6 +1,6 @@
 # ant
 
-[![Build Status](https://travis-ci.org/ant-go/ant.svg)](https://travis-ci.org/ant-go/ant)
+[![Build Status](https://travis-ci.com/ant-go/ant.svg)](https://travis-ci.com/ant-go/ant)
 [![codecov](https://codecov.io/gh/ant-go/ant/branch/master/graph/badge.svg)](https://codecov.io/gh/ant-go/ant)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ant-go/ant)](https://goreportcard.com/report/github.com/ant-go/ant)
 
