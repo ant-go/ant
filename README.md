@@ -27,6 +27,8 @@ Go 1.7+.
 #### Array(Slice/Map) Functions
 
 * in_array()
+* array_keys()
+* array_values()
 
 ## LICENSE
 
