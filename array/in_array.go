@@ -1,9 +1,10 @@
 package array
 
 import (
-	"errors"
 	"reflect"
 	"strconv"
+
+	"github.com/spf13/cast"
 )
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -126,28 +127,9 @@ func InArray(needle interface{}, haystack interface{}) bool {
 	if (v.Kind() != reflect.Array) && (v.Kind() != reflect.Slice) && (v.Kind() != reflect.Map) {
 		return false
 	}
-	var (
-		errToString = errors.New("toString fail")
-		toString func(i interface{}) (str string, err error)
-	)
-	toString = func(i interface{}) (str string, err error) {
-		n := reflect.ValueOf(i)
-		switch n.Kind() {
-		case reflect.String:
-			str = n.String()
-		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			str = strconv.FormatInt(n.Int(), 10)
-		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
-			str = strconv.FormatUint(n.Uint(), 10)
-		default:
-			err = errToString
-			return
-		}
-		return
-	}
 
-	s, err := toString(needle)
-	if err == errToString {
+	s, err := cast.ToStringE(needle)
+	if err != nil {
 		return false
 	}
 
@@ -159,8 +141,7 @@ func InArray(needle interface{}, haystack interface{}) bool {
 		for i := 0; i < v.Len(); i++ {
 			switch v.Index(i).Kind() {
 			case reflect.Interface:
-				s2, _ := toString(v.Index(i).Interface())
-				if s == s2 {
+				if s == cast.ToString(v.Index(i).Interface()) {
 					return true
 				}
 			case reflect.String:
