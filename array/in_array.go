@@ -128,10 +128,7 @@ func InArray(needle interface{}, haystack interface{}) bool {
 		return false
 	}
 
-	s, err := cast.ToStringE(needle)
-	if err != nil {
-		return false
-	}
+	s := cast.ToString(needle)
 
 	switch v.Kind() {
 	case reflect.Array, reflect.Slice:
