@@ -90,7 +90,7 @@ func SHA384(s string) string {
 	return hex.EncodeToString(o.Sum(nil))
 }
 
-// SHA512224 hash('sha512/244', $data)
+// SHA512224 hash('sha512/224', $data)
 func SHA512224(s string) string {
 	o := sha512.New512_224()
 	_, _ = o.Write([]byte(s))

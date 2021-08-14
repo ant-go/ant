@@ -50,6 +50,18 @@ Go 1.7+.
     * fnv1a32
     * fnv164
     * fnv1a64
+* hash_hmac()
+    * md5
+    * sha1
+    * sha224
+    * sha384
+    * sha512/224
+    * sha512/256
+    * sha512
+    * sha3-224
+    * sha3-256
+    * sha3-384
+    * sha3-512
 
 ## LICENSE
 
