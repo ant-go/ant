@@ -30,6 +30,12 @@ Go 1.7+.
 * array_keys()
 * array_values()
 
+#### Hash Functions
+
+* md5() | md5_file()
+* sha1() | sha1_file()
+* crc32()
+
 ## LICENSE
 
 MIT Licence.
