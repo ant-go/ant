@@ -11,6 +11,7 @@ import (
 // int8 / int16 / int32 / int64 / int
 // ---------------------------------------------------------------------------------------------------------------------
 
+// InArrayInt8 in_array()
 func InArrayInt8(a int8, array []int8) bool {
 	for _, e := range array {
 		if a == e {
@@ -20,6 +21,7 @@ func InArrayInt8(a int8, array []int8) bool {
 	return false
 }
 
+// InArrayInt16 in_array()
 func InArrayInt16(a int16, array []int16) bool {
 	for _, e := range array {
 		if a == e {
@@ -29,6 +31,7 @@ func InArrayInt16(a int16, array []int16) bool {
 	return false
 }
 
+// InArrayInt32 in_array()
 func InArrayInt32(a int32, array []int32) bool {
 	for _, e := range array {
 		if a == e {
@@ -38,6 +41,7 @@ func InArrayInt32(a int32, array []int32) bool {
 	return false
 }
 
+// InArrayInt64 in_array()
 func InArrayInt64(a int64, array []int64) bool {
 	for _, e := range array {
 		if a == e {
@@ -47,6 +51,7 @@ func InArrayInt64(a int64, array []int64) bool {
 	return false
 }
 
+// InArrayInt in_array()
 func InArrayInt(a int, array []int) bool {
 	for _, e := range array {
 		if a == e {
@@ -60,6 +65,7 @@ func InArrayInt(a int, array []int) bool {
 // uint8 / uint16 / uint32 / uint64 / uint
 // ---------------------------------------------------------------------------------------------------------------------
 
+// InArrayUInt8 in_array()
 func InArrayUInt8(a uint8, array []uint8) bool {
 	for _, e := range array {
 		if a == e {
@@ -69,6 +75,7 @@ func InArrayUInt8(a uint8, array []uint8) bool {
 	return false
 }
 
+// InArrayUInt16 in_array()
 func InArrayUInt16(a uint16, array []uint16) bool {
 	for _, e := range array {
 		if a == e {
@@ -78,6 +85,7 @@ func InArrayUInt16(a uint16, array []uint16) bool {
 	return false
 }
 
+// InArrayUInt32 in_array()
 func InArrayUInt32(a uint32, array []uint32) bool {
 	for _, e := range array {
 		if a == e {
@@ -87,6 +95,7 @@ func InArrayUInt32(a uint32, array []uint32) bool {
 	return false
 }
 
+// InArrayUInt64 in_array()
 func InArrayUInt64(a uint64, array []uint64) bool {
 	for _, e := range array {
 		if a == e {
@@ -96,6 +105,7 @@ func InArrayUInt64(a uint64, array []uint64) bool {
 	return false
 }
 
+// InArrayUInt in_array()
 func InArrayUInt(a uint, array []uint) bool {
 	for _, e := range array {
 		if a == e {
@@ -109,6 +119,7 @@ func InArrayUInt(a uint, array []uint) bool {
 // string
 // ---------------------------------------------------------------------------------------------------------------------
 
+// InArrayString in_array()
 func InArrayString(a string, array []string) bool {
 	for _, e := range array {
 		if a == e {
@@ -122,6 +133,7 @@ func InArrayString(a string, array []string) bool {
 // interface{}
 // ---------------------------------------------------------------------------------------------------------------------
 
+// InArray in_array()
 func InArray(needle interface{}, haystack interface{}) bool {
 	v := reflect.ValueOf(haystack)
 	if (v.Kind() != reflect.Array) && (v.Kind() != reflect.Slice) && (v.Kind() != reflect.Map) {
@@ -179,6 +191,7 @@ func InArray(needle interface{}, haystack interface{}) bool {
 	return false
 }
 
+// InArrayStrict in_array()
 func InArrayStrict(needle interface{}, haystack interface{}) bool {
 	v := reflect.ValueOf(haystack)
 	switch v.Kind() {
