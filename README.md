@@ -35,6 +35,21 @@ Go 1.7+.
 * md5() | md5_file()
 * sha1() | sha1_file()
 * crc32()
+* hash_equals()
+* hash()
+    * sha224
+    * sha384
+    * sha512/244
+    * sha512/256
+    * sha512
+    * sha3-224
+    * sha3-256
+    * sha3-384
+    * sha3-512
+    * fnv132
+    * fnv1a32
+    * fnv164
+    * fnv1a64
 
 ## LICENSE
 
