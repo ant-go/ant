@@ -2,7 +2,6 @@ package array
 
 import (
 	"reflect"
-	"strconv"
 
 	"github.com/spf13/cast"
 )
@@ -148,23 +147,8 @@ func InArray(needle interface{}, haystack interface{}) bool {
 			return false
 		}
 		for i := 0; i < v.Len(); i++ {
-			switch v.Index(i).Kind() {
-			case reflect.Interface:
-				if s == cast.ToString(v.Index(i).Interface()) {
-					return true
-				}
-			case reflect.String:
-				if s == v.Index(i).String() {
-					return true
-				}
-			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-				if s == strconv.FormatInt(v.Index(i).Int(), 10) {
-					return true
-				}
-			case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
-				if s == strconv.FormatUint(v.Index(i).Uint(), 10) {
-					return true
-				}
+			if s == cast.ToString(v.Index(i).Interface()) {
+				return true
 			}
 		}
 	case reflect.Map:
@@ -172,19 +156,8 @@ func InArray(needle interface{}, haystack interface{}) bool {
 			return false
 		}
 		for _, key := range v.MapKeys() {
-			switch v.MapIndex(key).Kind() {
-			case reflect.String:
-				if s == v.MapIndex(key).String() {
-					return true
-				}
-			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-				if s == strconv.FormatInt(v.MapIndex(key).Int(), 10) {
-					return true
-				}
-			case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
-				if s == strconv.FormatUint(v.MapIndex(key).Uint(), 10) {
-					return true
-				}
+			if s == cast.ToString(v.MapIndex(key).Interface()) {
+				return true
 			}
 		}
 	}
