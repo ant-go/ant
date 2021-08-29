@@ -17,8 +17,9 @@ timelib_tzinfo *_date_parse_tzfile_wrapper(const char *formal_tzname, const time
 	return timelib_parse_tzfile(formal_tzname, tzdb, &_dummy_error_code);
 }
 
-long php_strtotime(const char *tz_name, const char *s, size_t len)
+long php_strtotime(const char *tz_name, const char *s, unsigned long long _len)
 {
+	size_t len = (size_t) len;
 	int parse_error, epoch_does_not_fit_in_zend_long, dummy_error_code;
 	const timelib_tzdb *tzdb;
 	timelib_error_container *error;
