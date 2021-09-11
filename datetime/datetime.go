@@ -184,8 +184,14 @@ func dateFormat(format string, localtime bool, t time.Time) string {
 	var (
 		rfcColon bool
 		buf      strings.Builder
+		escape   bool
 	)
 	for _, char := range format {
+		if escape {
+			buf.WriteRune(char)
+			escape = false
+			continue
+		}
 		switch char {
 		// day
 		case 'd':
@@ -295,8 +301,8 @@ func dateFormat(format string, localtime bool, t time.Time) string {
 			}
 			buf.WriteString(fmt.Sprintf("%d", i))
 		case 'p':
-			zone, offset := t.Zone()
-			if !localtime || zone == "UTC" || offset == 0 {
+			_, offset := t.Zone()
+			if !localtime || offset == 0 {
 				buf.WriteString("Z")
 				continue
 			}
@@ -369,7 +375,7 @@ func dateFormat(format string, localtime bool, t time.Time) string {
 		case 'U':
 			buf.WriteString(fmt.Sprintf("%d", t.Unix()))
 		case '\\':
-			fallthrough
+			escape = true
 		default:
 			buf.WriteRune(char)
 		}
@@ -424,12 +430,9 @@ func isTimeDST(t time.Time) bool {
 		hh, mm, _ := t.AddDate(0, m, 0).UTC().Clock()
 		clock := hh*60 + mm
 		if clock != tClock {
-			if clock > tClock {
-				// std to dst
-				return true
-			}
-			// dst to std
-			return false
+			// true:  std to dst
+			// false: dst to std
+			return clock > tClock
 		}
 	}
 	// assume no dst
