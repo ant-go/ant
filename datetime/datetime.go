@@ -238,7 +238,7 @@ func dateFormat(format string, localtime bool, t time.Time) string {
 			if isLeap(t.Year()) {
 				i = 1
 			}
- 			buf.WriteString(fmt.Sprintf("%d", i))
+			buf.WriteString(fmt.Sprintf("%d", i))
 		case 'y':
 			buf.WriteString(fmt.Sprintf("%02d", t.Year()%100))
 		case 'Y':
