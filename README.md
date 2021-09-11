@@ -30,6 +30,12 @@ Go 1.7+.
 * array_keys()
 * array_values()
 
+#### DateTime Functions
+
+* strtotime()
+* date()
+* gmdate()
+
 #### Hash Functions
 
 * md5() | md5_file()

@@ -1,2 +1,5 @@
 .idea
 .vscode
+*.a
+*.o
+.DS_Store
